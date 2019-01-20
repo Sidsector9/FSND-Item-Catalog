@@ -1,0 +1,33 @@
+<html>
+    {% include '_head.html' %}
+    <body class="page-home">
+        {% include '_login.html' %}
+        <div class="container">
+            <div class="container-data">
+                <div class="catalog-items">
+                    <h2>Categories</h2>
+                    <ul>
+                        {% for item in catalog_items %}
+                            <li class="{{ 'active' if page == item.slug else '' }}"><a href="{{ request.url_root }}{{ item.slug }}/items">{{ item.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="latest-items">
+                    <h2>Latest Items</h2>
+                    <ul>
+                        {% for item in latest_items %}
+                            <li><a href="{{ request.url_root }}{{ item[3] }}/{{ item[1] }}">{{ item[0] }} ({{ item[2] }})</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% if 'username' in login_session %}
+                        <div class="controls-dummy"></div>
+                        <div class="controls">
+                            <a href="{{ request.url_root }}item/new">Add Item</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% include '_footer.html' %}
+    </body>
+</html>

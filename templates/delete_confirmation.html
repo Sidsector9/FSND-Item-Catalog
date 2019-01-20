@@ -1,0 +1,18 @@
+<html>
+    {% include '_head.html' %}
+    <body class="page-confirm-delete">
+        <div class="container">
+            <div class="container-data delete-confirmation-container">
+                {% if 'username' in login_session %}
+                        <h1>Are you sure you want to delete <strong>{{ item.name }}</strong>?</h1>
+                        <form action="{{ url_for('delete_item', item_slug=item_slug) }}" method="POST">
+                            <input type="submit" value="delete">
+                        </form>
+                {% else %}
+                    <h1>Only logged in users can delete an item</h1>
+                {% endif %}
+            </div>
+        </div>
+        {% include '_footer.html' %}
+    </body>
+</html>

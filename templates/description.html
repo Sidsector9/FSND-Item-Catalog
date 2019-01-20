@@ -1,0 +1,21 @@
+<html>
+    {% include '_head.html' %}
+    <body class="page-item-description">
+        {% include '_login.html' %}
+        <div class="container">
+            <div class="container-data">
+                <div class="description">
+                    <h2>{{ category.name }}</h2>
+                    <p><strong>Description:</strong> {{ description }}</p>
+                </div>
+                {% if 'username' in login_session and login_session['email'] == user_email[0] %}
+                    <div class="controls">
+                        <a href="{{ request.url_root }}catalog/{{ item_slug }}/edit">Edit</a>
+                        <a href="{{ request.url_root }}catalog/{{ item_slug }}/delete">Delete</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% include '_footer.html' %}
+    </body>
+</html>
