@@ -1,0 +1,205 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    background: #f1f3f5;
+    font-family: 'Sarabun', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-weight: 300;
+}
+
+h2 {
+    margin: 0;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    padding: 0 1.5rem;
+    font-weight: 500;
+}
+
+ul {
+    margin: 0;
+    margin-bottom: 15px;
+    padding: 0;
+    list-style: none;
+}
+
+li {
+    padding: .25rem 1.5rem;
+}
+
+a {
+    color: #678;
+    text-decoration: none;
+}
+
+img {
+    max-width: 32px;
+}
+
+input[type="text"],
+textarea,
+select {
+    margin-bottom: 1rem;
+    font-size: 16px;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: .5rem;
+    border: 1px solid #e6e6e6;
+    font-size: 16px;
+}
+
+a:hover {
+    color: #345;
+}
+
+.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.container {
+    margin: 60px auto;
+    max-width: 600px;
+}
+
+.container-data {
+    display: flex;
+    flex-flow: row wrap;
+    background-color: #fff;
+    box-shadow: 0 6px 8px rgba(102,119,136,.03), 0 1px 2px rgba(102,119,136,.3);
+    max-width: 600px;
+}
+
+.container-data form {
+    margin: 0;
+    padding: 1.5rem;
+    width: 100%;
+}
+
+.container-data form > * {
+    display: block;
+}
+
+.catalog-items {
+    background: linear-gradient(15deg,#745fb5,#9a6dbb);
+}
+
+.catalog-items a {
+    color: #fff;
+}
+
+.catalog-items a:hover {
+    color: #ddd;
+}
+
+.latest-items,
+.items {
+    position: relative;
+    flex: 1;
+}
+
+.description {
+    padding-bottom: .5rem;
+    width: 100%;
+}
+
+.description p {
+    padding: 0 1.5rem;
+}
+
+.controls {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #e6e6e6;
+    width: 100%;
+    margin-top: .5rem;
+}
+
+.controls-dummy {
+    height: 38px;
+}
+
+.controls a {
+    display: block;
+    padding: 0.5rem 1.5rem;
+    border-left: 1px solid #e6e6e6;
+}
+
+.controls a:hover {
+    background-color: #f3f3f3;
+}
+
+.latest-items .controls,
+.items .controls {
+    position: absolute;
+    bottom: 0;
+}
+
+footer h2 {
+    font-weight: 100;
+    font-size: 2rem;
+    text-align: center;
+}
+
+/* Login Header */
+.login-header {
+    background: linear-gradient(15deg,#745fb5,#9a6dbb);
+    box-shadow: 0 1px 1px rgba(102,119,136,.55);
+    padding: 10px 0 5px 0;
+}
+
+.login-header-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.logout-link {
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 0.25rem 0.5rem;
+}
+
+.welcome-user {
+    width: 100%;
+    margin-left: 8px;
+    padding: 0.5rem 0;
+    color: #fff;
+}
+
+/* Page Specific CSS */
+.page-edit-item .container-data,
+.page-add-item .container-data {
+    padding: 0 15px;
+}
+
+.delete-confirmation-container {
+    padding: 0 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.delete-confirmation-container form {
+    padding: 0;
+}
+
+.item-add-success {
+    padding: 0 1.5rem 1rem 1.5rem;
+}
+
+.page-item-add-success h1 {
+    width: 100%;
+}
