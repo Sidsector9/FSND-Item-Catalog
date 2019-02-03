@@ -1,6 +1,19 @@
-from flask import Flask, render_template, request, jsonify, flash, make_response, redirect
+from flask import (
+    Flask,
+    render_template,
+    request,
+    jsonify,
+    flash,
+    make_response,
+    redirect
+)
+
 from slugify import slugify
-from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
+from oauth2client.client import (
+    flow_from_clientsecrets,
+    FlowExchangeError
+
+)
 from db_functions import *
 import httplib2
 import json
@@ -49,8 +62,8 @@ def display_item_description(category_slug, item_slug):
         item_slug=item_slug,
         description=get_item_description(item_slug),
         login_session=login_session,
-        category=get_category_name_by_category_slug(category_slug).first(),
         user_email=user_email,
+        item=get_item_by_slug(item_slug)
     )
 
 
@@ -66,7 +79,7 @@ def add_item():
         data = request.form
         check_slug = session.query(Items).filter(
             Items.slug.like(slugify(data['title']) + "%"))
-        
+
         # If slug already exists, then append increment
         # the number and append it to the item slug.
         if check_slug.count() > 0:
@@ -74,7 +87,7 @@ def add_item():
                 '-' + str((check_slug.count() + 1))
         else:
             updated_slug = slugify(data['title'])
-        
+
         # Create a new item object.
         new_item = Items(
             name=data['title'],
@@ -82,7 +95,7 @@ def add_item():
             slug=updated_slug,
             description=data['description'],
             user_email=login_session['email'])
-        
+
         # Add and commit to the Items relation.
         session.add(new_item)
         session.commit()
@@ -158,7 +171,7 @@ def catalog_json():
         Items.name,
         Items.description).filter_by(
         id=Items.category_id)
-    
+
     # Get all categories with its `id` and `names`.
     categories = session.query(Category.id, Category.name).all()
     item_data = {}
@@ -193,7 +206,7 @@ def catalog_json():
     return jsonify(Category=category_data)
 
 
-@app.route('/gconnect', methods=['POST'])
+@app.route('/gconnect', methods=['GET', 'POST'])
 def gconnect():
 
     # If state doesn't match correctly, then throw 401 Unauthorized Access
@@ -280,7 +293,9 @@ def gdisconnect():
         return response
 
     # print login_session['username']
-    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
+    url = (
+        'https://accounts.google.com/o/oauth2/revoke?token=%s' %
+        login_session['access_token'])
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
 

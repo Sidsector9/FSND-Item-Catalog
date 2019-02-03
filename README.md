@@ -1,6 +1,7 @@
 # Items Catalog
 ## Project
 A simple Flask and Python-based website to display a list of Sports Items by Sports Category.
+
 _**Note:**_ Visit http://localhost:5000 instead of http://0.0.0.0:5000 for Google Sign-In to work.
 
 ## Database Schema
@@ -23,16 +24,19 @@ _**Note:**_ There is not dedicated relation to store User data since there is no
 
 This app requires the [slugify](https://github.com/un33k/python-slugify) module to generate slugs.
 
-Run `pip install python-slugify` to install slugify.
-
 As per the requirements, the items are queried by the URL parameters, and due to this, Items with the same name cannot be queried.
 The slugify module with the help of helper functions generates unique slugs for items with the same name.
 For example, `bat` will be generated for `Bat`, and if the name is repeated, the slugs generated will be `bat-2`, `bat-3`...and so on.
 
 ## Setup
-- Clone the repository using ``
-- cd into the directory using ``
-- Run `python python server-catalog.py`
+- Clone the repository using `git clone git@github.com:Sidsector9/FSND-Item-Catalog.git`
+- cd into the directory using `cd FSND-Item-Catalog/`
+- Run `vagrant up`
+- Run `vagrant ssh`
+- Run `cd /vagrant`
+- Run `sudo pip install python-slugify`
+- Run `python server-catalog.py`
+- Visit http://localhost:5000
 
 ## Features
 - Categories are fixed. No CRUD operations (except for Read) can be performed on Categories.
