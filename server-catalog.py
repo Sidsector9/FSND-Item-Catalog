@@ -18,6 +18,7 @@ from db_functions import *
 import httplib2
 import json
 import requests
+import logging
 
 
 app = Flask(__name__)
@@ -206,6 +207,89 @@ def catalog_json():
     return jsonify(Category=category_data)
 
 
+@app.route('/<string:category_slug>/JSON')
+def items_per_category_json(category_slug):
+    """JSON endpoint which returns items of a specific category."""
+
+    # Join the Items and the Category relations.
+    join_result = session.query(
+        Category.id,
+        Category.name,
+        Items.id,
+        Items.category_id,
+        Items.name,
+        Items.description,
+        Category.slug).filter_by(
+        id=Items.category_id)
+
+    # Get all categories with its `id` and `names`.
+    categories = session.query(Category.id, Category.name, Category.slug).all()
+    item_data = {}
+    category_data = []
+
+    # Populate the `item_data` dictionary
+    for result in join_result:
+        if result[6] == category_slug:
+            if result[1] not in item_data:
+                item_data[result[1]] = [{
+                    'description': result[5],
+                    'item_id': result[2],
+                    'title': result[4]
+                }]
+            else:
+                item_data[result[1]].append({
+                    'description': result[5],
+                    'item_id': result[2],
+                    'title': result[4]
+                })
+
+    # Add items in their respective category.
+    for category in categories:
+        if category.slug == category_slug:
+            category_data.append({
+                'cat_id': category.id,
+                'name': category.name,
+                'items': item_data[category.name]
+            })
+
+    # Return the data in a JSON format.
+    return jsonify(Items=category_data)
+
+
+@app.route('/<string:category_slug>/<string:item_slug>/JSON')
+def items_json(category_slug, item_slug):
+    """JSON endpoint which returns details of a specific item."""
+
+    # Join the Items and the Category relations.
+    join_result = session.query(
+        Category.id,
+        Category.name,
+        Items.id,
+        Items.category_id,
+        Items.name,
+        Items.description,
+        Category.slug,
+        Items.slug,
+        Items.user_email).filter(
+        Category.id == Items.category_id,
+        Items.slug == item_slug,
+        Category.slug == category_slug)
+
+    item_data = []
+
+    for item in join_result:
+        item_data.append({
+            'item_id': item[2],
+            'item_name': item[4],
+            'item_description': item[5],
+            'category_id': item[0],
+            'category_name': item[1],
+            'user_email': item[8]
+        })
+
+    return jsonify(Item=item_data)
+
+
 @app.route('/gconnect', methods=['GET', 'POST'])
 def gconnect():
 
@@ -254,7 +338,7 @@ def gconnect():
     if result['issued_to'] != CLIENT_ID:
         response = make_response(
             json.dumps("Token's client ID does not match app's."), 401)
-        print("Token's client ID does not match app's.")
+        logging.warning("Token's client ID does not match app's.")
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -292,7 +376,6 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
-    # print login_session['username']
     url = (
         'https://accounts.google.com/o/oauth2/revoke?token=%s' %
         login_session['access_token'])

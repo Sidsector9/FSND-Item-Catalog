@@ -10,10 +10,10 @@
                 {% if 'username' in login_session %}
                 <form action="{{ url_for('add_item') }}" method="POST">
                     <label>Title</label>
-                    <input type="text" name="title"/>
+                    <input type="text" name="title" required />
     
                     <label>Description</label>
-                    <textarea name="description"></textarea>
+                    <textarea name="description" required></textarea>
     
                     <label>Category</label>
                     <select name="category">
