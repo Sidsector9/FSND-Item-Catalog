@@ -34,7 +34,7 @@ For example, `bat` will be generated for `Bat`, and if the name is repeated, the
 - Run `vagrant up`
 - Run `vagrant ssh`
 - Run `cd /vagrant`
-- Run `sudo pip install python-slugify`
+- Run `sudo pip install -r requirements.txt`
 - Run `python server-catalog.py`
 - Visit http://localhost:5000
 
@@ -43,7 +43,9 @@ For example, `bat` will be generated for `Bat`, and if the name is repeated, the
 - Items can be Created, Read, Updated and Deleted only by Logged-in Users.
 - Users can Log in to the website using the Google Sign-In button on the top right.
 - A **Home** button icon is provided for ease of navigation.
-- A JSON endpoint is available at http://localhost:5000/catalog.json
+- A JSON endpoint for all data is available at http://localhost:5000/catalog.json
+- A JSON endpoint for items for a specific category is available at `http://localhost:5000/<string:category_slug>/JSON`. For example: http://localhost:5000/cricket/JSON
+- A JSON endpoint for a specific item is available at `http://localhost:5000/<string:category_slug>/<string:item_slug>/JSON`. For example: http://localhost:5000/cricket/ball/JSON
 
 ### Sample of a logged in Screen: 
 <img width="953" alt="screenshot 2019-01-16 at 12 35 47 am" src="https://user-images.githubusercontent.com/17757960/51435907-74225000-1ca8-11e9-9f5d-17e72deffb4b.png">
