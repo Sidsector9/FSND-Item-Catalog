@@ -62,6 +62,11 @@ def get_item_by_slug(item_slug):
     return session.query(Items).filter_by(slug=item_slug).first()
 
 
+def get_item_author(item_slug):
+    """Gets the email address of the user who created the item."""
+    return session.query(Items.user_email).filter_by(slug=item_slug).first()[0]
+
+
 def get_state():
     """Generate a 32 character string as a session state and return it."""
     state = ''.join(

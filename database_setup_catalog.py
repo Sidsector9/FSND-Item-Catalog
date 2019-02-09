@@ -25,7 +25,11 @@ class Items(Base):
     slug = Column(String(250))
     description = Column(String(250))
     user_email = Column(String(250))
-    category = relationship(Category)
+    category = relationship(
+        Category,
+        cascade="all, delete-orphan",
+        single_parent=True,
+    )
 
 
 engine = create_engine('sqlite:///catalog.db')
