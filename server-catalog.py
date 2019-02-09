@@ -115,6 +115,14 @@ def edit_item(item_slug):
     """The route for editing an exisiting item.
     Only accessible when logged in."""
 
+    authorized=False
+
+    if login_session['email'] != get_item_author(item_slug):
+        return render_template(
+            'edit_item.html',
+            authorized=authorized
+        )
+
     # If it's an edit submission, then update the data in the
     # Items relation.
     if request.method == 'POST':
@@ -128,6 +136,7 @@ def edit_item(item_slug):
         return render_template('item_updated_success.html')
 
     # Else show the edit form.
+    authorized=True
     return render_template(
         'edit_item.html',
         categories=get_categories(),
@@ -141,6 +150,14 @@ def edit_item(item_slug):
 def delete_item(item_slug):
     """Asks for user confirmation before deleting an item"""
 
+    authorized=False
+
+    if login_session['email'] != get_item_author(item_slug):
+        return render_template(
+            'delete_confirmation.html',
+            authorized=authorized
+        )
+
     # If it's a delete submission, then delete it from the
     # Items relation.
     if request.method == 'POST':
@@ -151,11 +168,13 @@ def delete_item(item_slug):
 
     # Else ask for 'delete confirmation' wheh the endpoint
     # is visited.
+    authorized=True
     return render_template(
         'delete_confirmation.html',
         item_slug=item_slug,
         item=get_item_by_slug(item_slug),
-        login_session=login_session
+        login_session=login_session,
+        authorized=authorized
     )
 
 
