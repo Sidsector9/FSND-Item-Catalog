@@ -2,18 +2,22 @@
     <div class="login-header-container">
         <a href="{{ request.url_root }}"><img src="{{ url_for('static', filename='home.png') }}" /></a>
         {% if 'username' not in login_session %}
-            <div id="signinButton">
-                <span class="g-signin"
-                    data-scope="openid email"
-                    data-clientid="613972768889-9ibrkrsrkd0eo1lje3rm1opp2e0762q1.apps.googleusercontent.com"
-                    data-redirecturi="postmessage"
-                    data-accesstype="offline"
-                    data-cookiepolicy="single_host_origin"
-                    data-callback="signInCallback">
-                </span>
-            </div>
+
+            <button id="signinButton" class="sign-in-button">Sign in with Google</button>
 
             <script>
+                $('#signinButton').click(function() {
+                    auth2.grantOfflineAccess().then(signInCallback);
+                });
+
+                function start() {
+                    gapi.load('auth2', function() {
+                        auth2 = gapi.auth2.init({
+                            client_id: '205605941618-t27ruc58of304rpcpga8hhlqvpmds0gd.apps.googleusercontent.com',
+                        });
+                    });
+                }
+
                 function signInCallback(authResult) {
                     if(authResult['code']) {
                         $('#signinButton').attr('style', 'display:none');

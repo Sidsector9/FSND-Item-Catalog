@@ -203,3 +203,14 @@ footer h2 {
 .page-item-add-success h1 {
     width: 100%;
 }
+
+.sign-in-button {
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 0.25rem 0.5rem;
+    background-color: transparent;
+    font-size: 16px;
+    cursor: pointer;
+}
